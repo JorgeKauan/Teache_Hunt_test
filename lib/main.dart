@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teachehunt/userForm.dart';
+import 'package:teachehunt/userList.dart';
 import 'package:teachehunt/user_provider.dart';
 
 void main() {
@@ -18,12 +19,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: Scaffold(
-          appBar: AppBar(title: Text('App')),
-          body: Userform(),
-        ),
+        home: Userform(), 
         routes: {
-          "/create": (_) => Userform()
+          "/create": (_) => Userform(),
+          "/list": (_) => Userlist(),
         },
       ),
     );

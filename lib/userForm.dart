@@ -30,12 +30,18 @@ class _UserformState extends State<Userform> {
       password: controllerPassword.text,
     );
 
-    userProvider.users.insert(0, user);
+
+    int usersLength = userProvider.users.length;
+
+    userProvider.users.insert(usersLength, user);
   } else {
     print('UserProvider não encontrado no contexto');
   }
 
   print(userProvider?.users[0].name);
+
+
+  Navigator.popAndPushNamed(context, "/list");
 }
 
 
