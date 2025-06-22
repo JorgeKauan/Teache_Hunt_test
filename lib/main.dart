@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(title: Text('App')),
           body: Userform(),
         ),
-        routes: {},
+        routes: {
+          "/create": (_) => Userform()
+        },
       ),
     );
   }
