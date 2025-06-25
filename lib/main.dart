@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:teachehunt/UserView.dart';
 import 'package:teachehunt/userForm.dart';
 import 'package:teachehunt/userList.dart';
 import 'package:teachehunt/user_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return UserProvider(
       users: [],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "/create": (_) => Userform(),
           "/list": (_) => Userlist(),
+          "/view": (_) => Userview(),
         },
       ),
     );

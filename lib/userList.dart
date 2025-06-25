@@ -7,34 +7,64 @@ class Userlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    UserProvider userProvider = UserProvider.of(context)  as UserProvider;
+    UserProvider userProvider = UserProvider.of(context) as UserProvider;
 
     List<User> users = userProvider.users;
 
     int usersLength = users.length;
 
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('User List'),
+        title: Text('Lista de Usuários'),
+        backgroundColor: Colors.blue,
         leading: BackButton(
           onPressed: () {
+            userProvider.indexUser = null;
             Navigator.popAndPushNamed(context, "/create");
           },
         ),
       ),
       body: ListView.builder(
-      itemCount: usersLength,  
-      itemBuilder: 
-      (BuildContext contextBuilder, indexBuilder) => 
-      Container(
+        itemCount: usersLength,
+        itemBuilder: (BuildContext contextBuilder, indexBuilder) => Container(
           child: ListTile(
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    userProvider.userSelected = users[indexBuilder];
+                    userProvider.indexUser = indexBuilder;
+                    Navigator.popAndPushNamed(context, "/create");
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+                IconButton(
+                  onPressed: () {
+                    userProvider.userSelected = users[indexBuilder];
+                    userProvider.indexUser = indexBuilder;
+                    Navigator.popAndPushNamed(context, "/view");
+                  },
+                  icon: Icon(Icons.visibility, color: Colors.blue,),
+                ),
+                IconButton(
+                  onPressed: () {
+                    userProvider.indexUser = null;
+                    userProvider.users.removeAt(indexBuilder);
+                    Navigator.popAndPushNamed(context, "/create");
+                  },
+                  icon: Icon(Icons.delete, color: Colors.red,
+                ),
+              )
+            ]
+            ),
             title: Text(users[indexBuilder].name),
           ),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.8))),
-        )
-      ), 
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(width: 0.8)),
+          ),
+        ),
+      ),
     );
   }
 }

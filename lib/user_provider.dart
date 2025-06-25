@@ -3,6 +3,8 @@ import 'package:teachehunt/user.dart';
 
 class UserProvider extends InheritedWidget {
   final List<User> users;
+  User? userSelected;
+  int? indexUser;
 
   UserProvider({required this.users, required Widget child})
     : super(child: child);

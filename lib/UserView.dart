@@ -3,18 +3,20 @@ import 'package:teachehunt/fieldForm.dart';
 import 'package:teachehunt/user.dart';
 import 'package:teachehunt/user_provider.dart';
 
-class Userform extends StatefulWidget {
-  const Userform({super.key});
+class Userview extends StatefulWidget {
+  Userview({super.key});
 
   @override
-  State<Userform> createState() => _UserformState();
+  State<Userview> createState() => _UserviewState();
 }
 
-class _UserformState extends State<Userform> {
-  String title = "Criando Usuário";
+class _UserviewState extends State<Userview> {
+  String title = "Mostrar Usuário";
 
   TextEditingController controllerName = TextEditingController();
+
   TextEditingController controllerEmail = TextEditingController();
+
   TextEditingController controllerPassword = TextEditingController();
 
   @override
@@ -28,32 +30,6 @@ class _UserformState extends State<Userform> {
       controllerName.text = userProvider.userSelected!.name;
       controllerEmail.text = userProvider.userSelected!.email;
       controllerPassword.text = userProvider.userSelected!.password;
-
-      setState(() {
-        this.title = 'Editando Usuário';
-      });
-    }
-
-    void save() {
-      final userProvider = UserProvider.of(context);
-
-      User user = User(
-        name: controllerName.text,
-        email: controllerEmail.text,
-        password: controllerPassword.text,
-      );
-
-      if (index != null) {
-        userProvider!.users[index] = user;
-      } else {
-        int userLength = userProvider!.users.length;
-
-        userProvider.users.insert(userLength, user);
-      }
-
-      print(userProvider.users[0].name);
-
-      Navigator.popAndPushNamed(context, "/list");
     }
 
     return Scaffold(
@@ -78,19 +54,19 @@ class _UserformState extends State<Userform> {
               label: 'Name',
               isPassword: false,
               controller: controllerName,
-              isForm: true,
+              isForm: false,
             ),
             Fieldform(
               label: 'Email',
               isPassword: false,
               controller: controllerEmail,
-              isForm: true,
+              isForm: false,
             ),
             Fieldform(
               label: 'Password',
-              isPassword: true,
+              isPassword: false,
               controller: controllerPassword,
-              isForm: true,
+              isForm: false,
             ),
 
             SizedBox(
@@ -98,9 +74,27 @@ class _UserformState extends State<Userform> {
               child: Container(
                 margin: EdgeInsets.all(16.00),
                 child: ElevatedButton(
-                  onPressed: save,
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, "/create");
+                  },
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                  child: Text('Salvar', style: TextStyle(color: Colors.white)),
+                  child: Text('Editar', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ),
+
+            SizedBox(
+              width: double.infinity,
+              child: Container(
+                margin: EdgeInsets.all(16.00),
+                child: ElevatedButton(
+                  onPressed: () {
+                    userProvider.indexUser = null;
+                    userProvider.users.removeAt(index!);
+                    Navigator.popAndPushNamed(context, "/create");
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  child: Text('Deletar', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
