@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teachehunt/containerAll.dart';
 import 'package:teachehunt/fieldForm.dart';
 import 'package:teachehunt/user.dart';
 import 'package:teachehunt/user_provider.dart';
@@ -34,7 +35,18 @@ class _UserformState extends State<Userform> {
       });
     }
 
+    GlobalKey<FormState> _key = GlobalKey();
+
     void save() {
+
+      final isValidate = _key.currentState?.validate();
+
+      if(isValidate == false){
+        return;
+      } 
+
+      _key.currentState?.save();
+
       final userProvider = UserProvider.of(context);
 
       User user = User(
@@ -71,40 +83,48 @@ class _UserformState extends State<Userform> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Fieldform(
-              label: 'Name',
-              isPassword: false,
-              controller: controllerName,
-              isForm: true,
-            ),
-            Fieldform(
-              label: 'Email',
-              isPassword: false,
-              controller: controllerEmail,
-              isForm: true,
-            ),
-            Fieldform(
-              label: 'Password',
-              isPassword: true,
-              controller: controllerPassword,
-              isForm: true,
-            ),
-
-            SizedBox(
-              width: double.infinity,
-              child: Container(
-                margin: EdgeInsets.all(16.00),
-                child: ElevatedButton(
-                  onPressed: save,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                  child: Text('Salvar', style: TextStyle(color: Colors.white)),
+      body: Containerall(
+        child: Center(
+          child: Form(
+            key: _key,
+            child: Column(
+              children: [
+                Fieldform(
+                  label: 'Name',
+                  isPassword: false,
+                  controller: controllerName,
+                  isForm: true,
+                  isEmail: false,
                 ),
-              ),
+                Fieldform(
+                  label: 'Email',
+                  isPassword: false,
+                  controller: controllerEmail,
+                  isForm: true,
+                  isEmail: true,
+                ),
+                Fieldform(
+                  label: 'Password',
+                  isPassword: true,
+                  controller: controllerPassword,
+                  isForm: true,
+                  isEmail: false,
+                ),
+                    
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    margin: EdgeInsets.all(16.00),
+                    child: ElevatedButton(
+                      onPressed: save,
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                      child: Text('Salvar', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

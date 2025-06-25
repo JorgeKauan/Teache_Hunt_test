@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teachehunt/containerAll.dart';
 import 'package:teachehunt/user.dart';
 import 'package:teachehunt/user_provider.dart';
 
@@ -24,44 +25,46 @@ class Userlist extends StatelessWidget {
           },
         ),
       ),
-      body: ListView.builder(
-        itemCount: usersLength,
-        itemBuilder: (BuildContext contextBuilder, indexBuilder) => Container(
-          child: ListTile(
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    userProvider.userSelected = users[indexBuilder];
-                    userProvider.indexUser = indexBuilder;
-                    Navigator.popAndPushNamed(context, "/create");
-                  },
-                  icon: Icon(Icons.edit),
-                ),
-                IconButton(
-                  onPressed: () {
-                    userProvider.userSelected = users[indexBuilder];
-                    userProvider.indexUser = indexBuilder;
-                    Navigator.popAndPushNamed(context, "/view");
-                  },
-                  icon: Icon(Icons.visibility, color: Colors.blue,),
-                ),
-                IconButton(
-                  onPressed: () {
-                    userProvider.indexUser = null;
-                    userProvider.users.removeAt(indexBuilder);
-                    Navigator.popAndPushNamed(context, "/create");
-                  },
-                  icon: Icon(Icons.delete, color: Colors.red,
-                ),
-              )
-            ]
+      body: Containerall(
+        child: ListView.builder(
+          itemCount: usersLength,
+          itemBuilder: (BuildContext contextBuilder, indexBuilder) => Container(
+            child: ListTile(
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      userProvider.userSelected = users[indexBuilder];
+                      userProvider.indexUser = indexBuilder;
+                      Navigator.popAndPushNamed(context, "/create");
+                    },
+                    icon: Icon(Icons.edit),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      userProvider.userSelected = users[indexBuilder];
+                      userProvider.indexUser = indexBuilder;
+                      Navigator.popAndPushNamed(context, "/view");
+                    },
+                    icon: Icon(Icons.visibility, color: Colors.blue,),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      userProvider.indexUser = null;
+                      userProvider.users.removeAt(indexBuilder);
+                      Navigator.popAndPushNamed(context, "/create");
+                    },
+                    icon: Icon(Icons.delete, color: Colors.red,
+                  ),
+                )
+              ]
+              ),
+              title: Text(users[indexBuilder].name),
             ),
-            title: Text(users[indexBuilder].name),
-          ),
-          decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(width: 0.8)),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(width: 0.8)),
+            ),
           ),
         ),
       ),
